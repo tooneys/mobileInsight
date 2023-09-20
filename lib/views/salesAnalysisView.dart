@@ -1,8 +1,7 @@
 import 'package:data_table_2/data_table_2.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:kgiantinsight/components/lineChart.dart';
+import 'package:kgiantinsight/components/lineChart2.dart';
 import 'package:kgiantinsight/controllers/salesController.dart';
 import 'package:kgiantinsight/models/salesModel.dart';
 import 'package:kgiantinsight/resources/app_colors.dart';
@@ -44,6 +43,17 @@ class _SalesAnalysisViewState extends State<SalesAnalysisView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const Text(
+                'Monthly Sales',
+                style: TextStyle(
+                  color: AppColors.mainTextColor1,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const Gap(15),
               Expanded(
                 child: FutureBuilder<List<AnalysisView>>(
                   future: _futureSalesAnalysis,
@@ -73,7 +83,8 @@ class _SalesAnalysisViewState extends State<SalesAnalysisView> {
                     }
 
                     return const Center(
-                        child: TextWhite(data: 'No Data Found'));
+                      child: TextWhite(data: 'No Data Found'),
+                    );
                   },
                 ),
               ),
@@ -97,19 +108,8 @@ class _SalesAnalysisViewState extends State<SalesAnalysisView> {
         aspectRatio: 3 / 2,
         child: Column(
           children: [
-            const Text(
-              'Monthly Sales',
-              style: TextStyle(
-                color: AppColors.mainTextColor1,
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 2,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const Gap(15),
             Expanded(
-              child: LineChartComponent(isShowingMainData: true),
+              child: LineChartWidget(points: dt),
             ),
           ],
         ),
@@ -147,8 +147,7 @@ class _SalesAnalysisViewState extends State<SalesAnalysisView> {
       );
     }).toList();
 
-    return Container(
-      padding: EdgeInsets.all(8),
+    return SizedBox(
       child: DataTable2(
         columnSpacing: 20,
         horizontalMargin: 12,
